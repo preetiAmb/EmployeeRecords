@@ -20,7 +20,10 @@ const employeeSlice = createSlice({
   reducers: {
     saveNewEmployee: {
       prepare: employee => ({
-        payload: { ...employee, id: new Date().getTime() },
+        payload: {
+          ...employee,
+          id: new Date().getTime(),
+        },
       }),
       reducer(draftState, action) {
         draftState.employees_records = [
@@ -29,9 +32,19 @@ const employeeSlice = createSlice({
         ];
       },
     },
+    deleteEmployee: (draftState, action) => {
+      const employeeIdToDelete = action.payload;
+      const indexToDelete = draftState.employees_records.findIndex(
+        employee => employee.id === employeeIdToDelete
+      );
+      if (indexToDelete !== -1) {
+        draftState.employees_records.splice(indexToDelete, 1);
+      }
+      return draftState;
+    },
   },
 });
 
-export const { saveNewEmployee } = employeeSlice.actions;
+export const { saveNewEmployee, deleteEmployee, editEmployee } = employeeSlice.actions;
 
 export default employeeSlice.reducer;
