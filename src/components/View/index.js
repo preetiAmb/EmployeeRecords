@@ -2,12 +2,23 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { Box, Button, Flex, Header } from "../styled";
-import { deleteEmployee } from "../../redux/employees/actionCreators";
+import {
+  deleteEmployee,
+  editEmployee,
+} from "../../redux/employees/actionCreators";
 
 const View = () => {
   const employees = useSelector(state => state.employees.employees_records);
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const handleEdit = employeeId => {
+    const employeeToEdit = employees.find(
+      employee => employee.id === employeeId
+    );
+    dispatch(editEmployee(employeeToEdit));
+    history.push(`/create/${employeeId}`);
+  };
 
   const handleDelete = employeeId => {
     dispatch(deleteEmployee(employeeId));
@@ -50,8 +61,13 @@ const View = () => {
                     <td>{employee.birthDate}</td>
                     <td>{employee.status}</td>
                     <td>{employee.jobTitle}</td>
-                    <td>{employee.actions}</td>
                     <td>
+                      <Button
+                        data-cy={`editButton-${employee.id}`}
+                        onClick={() => handleEdit(employee.id)}
+                      >
+                        Edit
+                      </Button>
                       <Button
                         data-cy={`deleteButton-${employee.id}`}
                         onClick={() => handleDelete(employee.id)}

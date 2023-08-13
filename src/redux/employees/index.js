@@ -12,6 +12,7 @@ const defaultEmployee = {
 
 const initialState = {
   employees_records: [defaultEmployee],
+  employeeToEdit: null,
 };
 
 const employeeSlice = createSlice({
@@ -40,11 +41,27 @@ const employeeSlice = createSlice({
       if (indexToDelete !== -1) {
         draftState.employees_records.splice(indexToDelete, 1);
       }
-      return draftState;
+    },
+    editEmployee: (draftState, action) => {
+      const updateEmployee = action.payload;
+      const indexToUpdate = draftState.employees_records.findIndex(
+        employee => employee.id === updateEmployee.id
+      );
+      if (indexToUpdate !== -1) {
+        draftState.employees_records[indexToUpdate] = updateEmployee;
+      }
+    },
+    resetEmployeeToEdit: draftState => {
+      draftState.employeeToEdit = null;
     },
   },
 });
 
-export const { saveNewEmployee, deleteEmployee, editEmployee } = employeeSlice.actions;
+export const {
+  saveNewEmployee,
+  deleteEmployee,
+  editEmployee,
+  resetEmployeeToEdit,
+} = employeeSlice.actions;
 
 export default employeeSlice.reducer;
