@@ -17,7 +17,7 @@ const View = () => {
       employee => employee.id === employeeId
     );
     dispatch(editEmployee(employeeToEdit));
-    history.push(`/create/${employeeId}`);
+    history.push(`/edit/${employeeId}`);
   };
 
   const handleDelete = employeeId => {
