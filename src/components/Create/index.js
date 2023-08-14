@@ -24,6 +24,11 @@ const Create = () => {
     [employees, employeeId]
   );
 
+  const validationSchema = useMemo(
+    () => formValidationSchema(employees, employeeToEdit.id),
+    [employees, employeeToEdit.id]
+  );
+
   const submitForm = useCallback(
     employee => {
       if (employeeToEdit.id) {
@@ -63,7 +68,7 @@ const Create = () => {
           : "Create new employee"}
       </Header>
       <Formik
-        validationSchema={formValidationSchema}
+        validationSchema={validationSchema}
         onSubmit={submitForm}
         initialValues={initialValues}
       >
