@@ -1,16 +1,29 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router";
-import { Box, Button, Flex, Header } from "../styled";
+import {
+  Box,
+  Button,
+  Flex,
+  Header,
+  Table,
+  TableHeader,
+  TableCell,
+  TableRow,
+  TableBody,
+} from "../styled";
 import {
   deleteEmployee,
   editEmployee,
+  updateCurrentPage,
 } from "../../redux/employees/actionCreators";
 
 const View = () => {
+  const currentPage = useSelector(state => state.employees.currentPage);
   const employees = useSelector(state => state.employees.employees_records);
   const dispatch = useDispatch();
   const history = useHistory();
+  const sentinelRef = useRef(null);
 
   const handleEdit = employeeId => {
     const employeeToEdit = employees.find(
@@ -23,6 +36,27 @@ const View = () => {
   const handleDelete = employeeId => {
     dispatch(deleteEmployee(employeeId));
   };
+
+  useEffect(() => {
+    const handleIntersect = entries => {
+      const [entry] = entries;
+      if (entry.isIntersecting) {
+        const nextPage = currentPage + 1;
+        dispatch(updateCurrentPage(nextPage));
+      }
+    };
+
+    const observer = new IntersectionObserver(handleIntersect);
+    const currentSentinelRef = sentinelRef.current;
+    if (currentSentinelRef) {
+      observer.observe(currentSentinelRef);
+    }
+    return () => {
+      if (currentSentinelRef) {
+        observer.unobserve(currentSentinelRef);
+      }
+    };
+  }, [currentPage, dispatch]);
 
   return (
     <>
@@ -39,29 +73,29 @@ const View = () => {
           </Button>
         </Box>
         <Box marginTop="md">
-          <table>
-            <thead>
-              <tr>
-                <th>FirstName</th>
-                <th>Surname</th>
-                <th>Email</th>
-                <th>Birth Date</th>
-                <th>Status</th>
-                <th>Job Title</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableCell>FirstName</TableCell>
+                <TableCell>Surname</TableCell>
+                <TableCell>Email</TableCell>
+                <TableCell>Birth Date</TableCell>
+                <TableCell>Status</TableCell>
+                <TableCell>Job Title</TableCell>
+                <TableCell>Actions</TableCell>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
               {employees &&
                 employees.map(employee => (
-                  <tr key={employee.id}>
-                    <td>{employee.firstName}</td>
-                    <td>{employee.surname}</td>
-                    <td>{employee.email}</td>
-                    <td>{employee.birthDate}</td>
-                    <td>{employee.status}</td>
-                    <td>{employee.jobTitle}</td>
-                    <td>
+                  <TableRow key={employee.id}>
+                    <TableCell>{employee.firstName}</TableCell>
+                    <TableCell>{employee.surname}</TableCell>
+                    <TableCell>{employee.email}</TableCell>
+                    <TableCell>{employee.birthDate}</TableCell>
+                    <TableCell>{employee.status}</TableCell>
+                    <TableCell>{employee.jobTitle}</TableCell>
+                    <TableCell>
                       <Button
                         data-cy={`editButton-${employee.id}`}
                         onClick={() => handleEdit(employee.id)}
@@ -74,12 +108,13 @@ const View = () => {
                       >
                         Delete
                       </Button>
-                    </td>
-                  </tr>
+                    </TableCell>
+                  </TableRow>
                 ))}
-            </tbody>
-          </table>
+            </TableBody>
+          </Table>
         </Box>
+        <div ref={sentinelRef} style={{ height: "8px" }} />
       </Flex>
     </>
   );
