@@ -3,6 +3,10 @@ describe("Examine the creation of employees", () => {
     cy.visit("http://localhost:3000/#/create");
   });
 
+  it("displays 'Create new employee' when creating a new employee", () => {
+    cy.get("[data-cy=header]").should("contain", "Create new employee");
+  });
+
   it("validates empty submitted fields properly", () => {
     cy.get("[data-cy=saveButton]").click();
     cy.get("[data-cy=firstNameErrorMessage]").should("contain", "Required");

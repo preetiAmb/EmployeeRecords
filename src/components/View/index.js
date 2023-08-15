@@ -73,29 +73,37 @@ const View = () => {
           </Button>
         </Box>
         <Box marginTop="md">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableCell>FirstName</TableCell>
-                <TableCell>Surname</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>Birth Date</TableCell>
-                <TableCell>Status</TableCell>
-                <TableCell>Job Title</TableCell>
-                <TableCell>Actions</TableCell>
+          <Table data-cy="table">
+            <TableHeader data-cy="tableHeader">
+              <TableRow data-cy="tableRow">
+                <TableCell data-cy="tableCell">FirstName</TableCell>
+                <TableCell data-cy="tableCell">Surname</TableCell>
+                <TableCell data-cy="tableCell">Email</TableCell>
+                <TableCell data-cy="tableCell">Birth Date</TableCell>
+                <TableCell data-cy="tableCell">Status</TableCell>
+                <TableCell data-cy="tableCell">Job Title</TableCell>
+                <TableCell data-cy="tableCell">Actions</TableCell>
               </TableRow>
             </TableHeader>
-            <TableBody>
+            <TableBody data-cy="tableBody">
               {employees &&
                 employees.map(employee => (
-                  <TableRow key={employee.id}>
-                    <TableCell>{employee.firstName}</TableCell>
-                    <TableCell>{employee.surname}</TableCell>
-                    <TableCell>{employee.email}</TableCell>
-                    <TableCell>{employee.birthDate}</TableCell>
-                    <TableCell>{employee.status}</TableCell>
-                    <TableCell>{employee.jobTitle}</TableCell>
-                    <TableCell>
+                  <TableRow key={employee.id} data-cy="tableRow">
+                    <TableCell data-cy="tableCell">
+                      {employee.firstName}
+                    </TableCell>
+                    <TableCell data-cy="tableCell">
+                      {employee.surname}
+                    </TableCell>
+                    <TableCell data-cy="tableCell">{employee.email}</TableCell>
+                    <TableCell data-cy="tableCell">
+                      {employee.birthDate}
+                    </TableCell>
+                    <TableCell data-cy="tableCell">{employee.status}</TableCell>
+                    <TableCell data-cy="tableCell">
+                      {employee.jobTitle}
+                    </TableCell>
+                    <TableCell data-cy="tableCell">
                       <Button
                         data-cy={`editButton-${employee.id}`}
                         onClick={() => handleEdit(employee.id)}

@@ -2,6 +2,7 @@ describe("Examine the editing of employees", () => {
   beforeEach(() => {
     cy.visit("http://localhost:3000/#/edit/1692036973785");
   });
+
   it("validates empty submitted fields properly", () => {
     cy.get("[data-cy=saveButton]").click();
     cy.get("[data-cy=firstNameErrorMessage]").should("contain", "Required");
