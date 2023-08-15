@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Table = styled.table`
   border-collapse: collapse;
   margin-top: 20px;
-  margin: 20px;
+  margin: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
 
@@ -12,6 +12,7 @@ export const TableHeader = styled.thead`
   background-color: lightgray;
   font-weight: bold;
   padding: 12px;
+  width: 100%;
   border-bottom: 1px solid #ddd;
 `;
 
