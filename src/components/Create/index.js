@@ -51,16 +51,19 @@ const Create = () => {
     [dispatch, employeeToEdit, history]
   );
 
-  const initialValues = employeeToEdit
-    ? { ...employeeToEdit }
-    : {
-        firstName: "",
-        surname: "",
-        email: "",
-        birthDate: "",
-        status: "",
-        jobTitle: "",
-      };
+  const initialValues = useMemo(() => {
+    if (employeeToEdit && Object.keys(employeeToEdit).length > 0) {
+      return { ...employeeToEdit };
+    }
+    return {
+      firstName: "",
+      surname: "",
+      email: "",
+      birthDate: "",
+      status: "",
+      jobTitle: "",
+    };
+  }, [employeeToEdit]);
 
   useEffect(() => {
     return () => {
