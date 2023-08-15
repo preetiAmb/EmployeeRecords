@@ -5,6 +5,7 @@ import Overview from "../Overview";
 import Create from "../Create";
 import View from "../View";
 import { AppWrapper, GlobalStyle } from "../styled";
+import LazyView from "../LazyView";
 
 WebFont.load({
   google: {
@@ -21,6 +22,7 @@ const App = () => {
           <Route path="/create" component={Create} />
           <Route path="/view" component={View} />
           <Route path="/" component={Overview} />
+          <LazyView />
         </Switch>
       </AppWrapper>
       <GlobalStyle />
