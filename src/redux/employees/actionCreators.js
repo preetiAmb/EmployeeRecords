@@ -16,3 +16,16 @@ export const editEmployee = employee => dispatch => {
 export const resetEmployeeToEdit = () => dispatch => {
   dispatch(actions.resetEmployeeToEdit());
 };
+
+export const updateCurrentPage = page => dispatch => {
+  dispatch(actions.updateCurrentPage(page));
+};
+
+export const setSuccessMessage = message => ({
+  type: actions.setSuccessMessage.type,
+  payload: message,
+});
+
+export const clearSuccessMessage = () => ({
+  type: actions.clearSuccessMessage.type,
+});

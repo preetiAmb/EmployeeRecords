@@ -8,6 +8,7 @@ const Button = styled.button`
   ${state};
 
   text-align: center;
+  margin-top: 12px;
   height: 33px;
   background-color: ${({ backgroundColor = "background" }) =>
     theme.buttons[backgroundColor]};

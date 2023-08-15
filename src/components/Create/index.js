@@ -1,8 +1,8 @@
 import React, { useCallback, useMemo, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { Formik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { Flex, Header } from "../styled";
+import { Flex, Header, SuccessMessage } from "../styled";
 import FormField from "./FormField";
 import FormButtons from "./FormButtons";
 import formValidationSchema from "./formValidationSchema";
@@ -10,12 +10,16 @@ import {
   saveNewEmployee,
   editEmployee,
   resetEmployeeToEdit,
+  setSuccessMessage,
+  clearSuccessMessage,
 } from "../../redux/employees/actionCreators";
 
 const Create = () => {
   const { employeeId } = useParams();
+  const history = useHistory();
   const dispatch = useDispatch();
   const employees = useSelector(state => state.employees.employees_records);
+  const successMessage = useSelector(state => state.employees.successMessage);
 
   const employeeToEdit = useMemo(
     () =>
@@ -34,11 +38,17 @@ const Create = () => {
       if (employeeToEdit.id) {
         dispatch(editEmployee({ ...employee, id: employeeToEdit.id }));
         dispatch(resetEmployeeToEdit());
+        dispatch(setSuccessMessage("Employee edited successfully"));
       } else {
         dispatch(saveNewEmployee(employee));
+        dispatch(setSuccessMessage("Employee created successfully"));
       }
+      setTimeout(() => {
+        dispatch(clearSuccessMessage());
+        history.push("/");
+      }, 3000);
     },
-    [dispatch, employeeToEdit]
+    [dispatch, employeeToEdit, history]
   );
 
   const initialValues = employeeToEdit
@@ -67,6 +77,7 @@ const Create = () => {
           ? "Edit employee"
           : "Create new employee"}
       </Header>
+      {successMessage && <SuccessMessage>{successMessage}</SuccessMessage>}
       <Formik
         validationSchema={validationSchema}
         onSubmit={submitForm}

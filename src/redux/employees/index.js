@@ -13,6 +13,9 @@ const defaultEmployee = {
 const initialState = {
   employees_records: [defaultEmployee],
   employeeToEdit: null,
+  currentPage: 1,
+  itemsPerPage: 2,
+  SuccessMessage: null,
 };
 
 const employeeSlice = createSlice({
@@ -54,6 +57,15 @@ const employeeSlice = createSlice({
     resetEmployeeToEdit: draftState => {
       draftState.employeeToEdit = null;
     },
+    updateCurrentPage: (draftState, action) => {
+      draftState.currentPage = action.payload;
+    },
+    setSuccessMessage: (draftState, action) => {
+      draftState.successMessage = action.payload;
+    },
+    clearSuccessMessage: draftState => {
+      draftState.successMessage = null;
+    },
   },
 });
 
@@ -62,6 +74,9 @@ export const {
   deleteEmployee,
   editEmployee,
   resetEmployeeToEdit,
+  updateCurrentPage,
+  setSuccessMessage,
+  clearSuccessMessage,
 } = employeeSlice.actions;
 
 export default employeeSlice.reducer;
