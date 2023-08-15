@@ -39,13 +39,17 @@ const Create = () => {
         dispatch(editEmployee({ ...employee, id: employeeToEdit.id }));
         dispatch(resetEmployeeToEdit());
         dispatch(setSuccessMessage("Employee details updated successfully"));
+        setTimeout(() => {
+          dispatch(clearSuccessMessage());
+          history.push("/view");
+        }, 3000);
       } else {
         dispatch(saveNewEmployee(employee));
         dispatch(setSuccessMessage("Employee details created successfully"));
       }
       setTimeout(() => {
         dispatch(clearSuccessMessage());
-        history.push("/");
+        history.push("/view");
       }, 3000);
     },
     [dispatch, employeeToEdit, history]
@@ -75,7 +79,7 @@ const Create = () => {
 
   return (
     <>
-      <Header>
+      <Header data-cy="header">
         {employeeToEdit.id !== undefined
           ? "Edit employee"
           : "Create new employee"}
