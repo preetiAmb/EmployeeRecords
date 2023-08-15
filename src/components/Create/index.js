@@ -38,7 +38,7 @@ const Create = () => {
       if (employeeToEdit.id) {
         dispatch(editEmployee({ ...employee, id: employeeToEdit.id }));
         dispatch(resetEmployeeToEdit());
-        dispatch(setSuccessMessage("Employee edited successfully"));
+        dispatch(setSuccessMessage("Employee updated successfully"));
       } else {
         dispatch(saveNewEmployee(employee));
         dispatch(setSuccessMessage("Employee created successfully"));
@@ -80,7 +80,11 @@ const Create = () => {
           ? "Edit employee"
           : "Create new employee"}
       </Header>
-      {successMessage && <SuccessMessage>{successMessage}</SuccessMessage>}
+      {successMessage && (
+        <SuccessMessage data-cy="successMessage">
+          {successMessage}
+        </SuccessMessage>
+      )}
       <Formik
         validationSchema={validationSchema}
         onSubmit={submitForm}
