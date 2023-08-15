@@ -38,10 +38,10 @@ const Create = () => {
       if (employeeToEdit.id) {
         dispatch(editEmployee({ ...employee, id: employeeToEdit.id }));
         dispatch(resetEmployeeToEdit());
-        dispatch(setSuccessMessage("Employee updated successfully"));
+        dispatch(setSuccessMessage("Employee details updated successfully"));
       } else {
         dispatch(saveNewEmployee(employee));
-        dispatch(setSuccessMessage("Employee created successfully"));
+        dispatch(setSuccessMessage("Employee details created successfully"));
       }
       setTimeout(() => {
         dispatch(clearSuccessMessage());
