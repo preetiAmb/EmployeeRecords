@@ -37,6 +37,7 @@ const formValidationSchema = (existingEmployees, currentEmployeeId) => {
     jobTitle: yup
       .string()
       .trim()
+      .matches(/^[A-Za-z ]*$/, "Only text characters are allowed")
       .max(255, "The maximum number of characters is 255")
       .required("Required"),
   });

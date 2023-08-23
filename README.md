@@ -18,3 +18,10 @@ npx cypress open
 If you want to run Cypress in headless mode instead, run the following command:
 
 npx cypress run
+
+
+Added features
+
+- Success message after saving updating
+- handling duplication of employee records by email
+- added error handling for birthDate for format
